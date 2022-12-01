@@ -1,9 +1,10 @@
 import torch
 from convgru import ConvGRU
+from gru_model import GruRNN
 import torch.nn as nn
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-gru_model = ConvGRU(input_size=8, hidden_sizes=[32,64,16],
-                  kernel_sizes=[3, 5, 3], n_layers=3)
+gru_model = GruRNN(input_size=8, hidden_size=32,
+                  output_size=1, num_layers=3)
 gru_model.to(device)
 # INPUT_FEATURES_NUM = 5
 # OUTPUT_FEATURES_NUM = 1
@@ -21,7 +22,7 @@ print('model.parameters:', gru_model.parameters)
 
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(gru_model.parameters(), lr=1e-2)
-
+"""
 
 prev_loss = 1000
 max_epochs = 2000
